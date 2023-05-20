@@ -32,12 +32,18 @@ pipeline {
                     def deploymentDir = "deployment"
                     def htdocsPath = "C:\\xampp\\htdocs"
 
-                    if (!isDirectoryExists(deploymentDir)) {
-                        bat 'mkdir deployment'
+                    // Delete existing deployment directory if it exists
+                    if (isDirectoryExists(deploymentDir)) {
+                        bat "rd /s /q ${deploymentDir}"
                     }
 
+                    // Create deployment directory
+                    bat "mkdir ${deploymentDir}"
+
+                    // Copy files to deployment directory
                     bat "xcopy /S /Y dist\\* ${deploymentDir}\\"
 
+                    // Copy deployment files to htdocs
                     bat "xcopy /S /Y ${deploymentDir}\\* ${htdocsPath}"
                 }
             }
