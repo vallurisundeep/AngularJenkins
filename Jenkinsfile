@@ -32,16 +32,13 @@ pipeline {
                     def deploymentDir = "deployment"
                     def htdocsPath = "C:\\xampp\\htdocs"
 
-                    // Delete existing deployment directory if it exists
-                    if (isDirectoryExists(deploymentDir)) {
-                        bat "rmdir /s /q ${deploymentDir}"
+                    dir(deploymentDir) {
+                        // Clean up existing deployment files if they exist
+                        bat "del /F /Q *"
+
+                        // Copy files to deployment directory
+                        bat "xcopy /S /Y ..\\dist\\* ."
                     }
-
-                    // Create deployment directory
-                    bat "mkdir ${deploymentDir}"
-
-                    // Copy files to deployment directory
-                    bat "xcopy /S /Y dist\\* ${deploymentDir}\\"
 
                     // Copy deployment files to htdocs
                     bat "xcopy /S /Y ${deploymentDir}\\* ${htdocsPath}"
@@ -49,8 +46,4 @@ pipeline {
             }
         }
     }
-}
-
-def isDirectoryExists(directoryPath) {
-    return bat(script: "if exist \"${directoryPath}\" echo true", returnStdout: true).trim() == "true"
 }
