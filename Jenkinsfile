@@ -32,7 +32,7 @@ pipeline {
                     def deploymentDir = "deployment"
                     def htdocsPath = "C:\\xampp\\htdocs"
 
-                    if (!fileExists(deploymentDir)) {
+                    if (!isDirectoryExists(deploymentDir)) {
                         bat 'mkdir deployment'
                     }
 
@@ -45,6 +45,6 @@ pipeline {
     }
 }
 
-def fileExists(filePath) {
-    return fileExists(filePath: filePath)
+def isDirectoryExists(directoryPath) {
+    return bat(script: "if exist \"${directoryPath}\" echo true", returnStdout: true).trim() == "true"
 }
