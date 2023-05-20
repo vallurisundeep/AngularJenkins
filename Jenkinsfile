@@ -34,7 +34,7 @@ pipeline {
 
                     // Delete existing deployment directory if it exists
                     if (isDirectoryExists(deploymentDir)) {
-                        bat "rd /s /q ${deploymentDir}"
+                        bat "rmdir /s /q ${deploymentDir}"
                     }
 
                     // Create deployment directory
