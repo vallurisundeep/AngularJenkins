@@ -30,7 +30,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('Sonarqube') {
                     // Run the SonarScanner analysis
-                    bat 'sonar-scanner'
+                   bat 'cmd /c C:\\Workspace\\sonarqube\\bin\\sonar-scanner.bat'
                 }
             }
         }
