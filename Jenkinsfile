@@ -26,6 +26,15 @@ pipeline {
             }
         }
 
+        stage("SonarQube Scan") {
+            steps {
+                withSonarQubeEnv('Sonarqube') {
+                    // Run the SonarScanner analysis
+                    bat 'sonar-scanner'
+                }
+            }
+        }
+
         stage("Deployment") {
             steps {
                 script {
